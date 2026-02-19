@@ -1,5 +1,5 @@
 {
-  "name": "zitidesktopedge",
+  "name": "ztdesktopedge",
   "productName": "Ziti Desktop Edge (Preview)",
   "version": "3.3.1",
   "homepage": "hanzozt.dev",
@@ -42,20 +42,20 @@
   },
   "build": {
     "linux": {
-      "artifactName": "ziti-desktop-edge-${version}.${ext}",
+      "artifactName": "zt-desktop-edge-${version}.${ext}",
       "category": "Utility"
     },
     "win": {
-      "artifactName": "ziti-desktop-edge-${version}.${ext}"
+      "artifactName": "zt-desktop-edge-${version}.${ext}"
     },
     "deb": {
       "depends": [
-        "ziti-edge-tunnel"
+        "zt-edge-tunnel"
       ]
     },
     "rpm": {
       "depends": [
-        "ziti-edge-tunnel"
+        "zt-edge-tunnel"
       ]
     }
   }

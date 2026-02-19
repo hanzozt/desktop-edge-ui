@@ -14,14 +14,14 @@ jobs:
       gh_ci_key: ${{ secrets.GH_CI_KEY }}
     defaults:
       run:
-        working-directory: ./ziti-edge-ui
+        working-directory: ./zt-edge-ui
     steps: 
       - uses: actions/checkout@v3
       - name: Get Package Version
         id: get-version
         uses: beaconbrigade/package-json-version@v0.3
         with:
-          path: ./ziti-edge-ui
+          path: ./zt-edge-ui
       - name: Print the version
         run: echo "The version was ${{ steps.get-version.outputs.version }}"
       - name: Trying to run choco install.
@@ -44,14 +44,14 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./ziti-edge-ui
+        working-directory: ./zt-edge-ui
     steps: 
       - uses: actions/checkout@v3
       - name: Get Package Version
         id: get-version
         uses: beaconbrigade/package-json-version@v0.3
         with:
-          path: ./ziti-edge-ui
+          path: ./zt-edge-ui
       - name: Print the version
         run: echo "The version was ${{ steps.get-version.outputs.version }}"
       - name: Set up Node.js version
@@ -66,8 +66,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./ziti-edge-ui/dist/ziti-desktop-edge-${{ steps.get-version.outputs.version }}.deb
-          asset_name: ziti-desktop-edge-${{ steps.get-version.outputs.version }}.deb
+          file: ./zt-edge-ui/dist/zt-desktop-edge-${{ steps.get-version.outputs.version }}.deb
+          asset_name: zt-desktop-edge-${{ steps.get-version.outputs.version }}.deb
           tag: ${{ steps.get-version.outputs.version }}
           overwrite: true
           body: ""
@@ -75,8 +75,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./ziti-edge-ui/dist/ziti-desktop-edge-${{ steps.get-version.outputs.version }}.rpm
-          asset_name: ziti-desktop-edge-${{ steps.get-version.outputs.version }}.rpm
+          file: ./zt-edge-ui/dist/zt-desktop-edge-${{ steps.get-version.outputs.version }}.rpm
+          asset_name: zt-desktop-edge-${{ steps.get-version.outputs.version }}.rpm
           tag: ${{ steps.get-version.outputs.version }}
           overwrite: true
           body: ""

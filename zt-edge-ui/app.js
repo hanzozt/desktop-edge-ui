@@ -15,14 +15,14 @@ const { execFile } = require('node:child_process');
 
 var mainWindow;
 var logging = true;
-var connectedIcon = path.join(__dirname, 'assets','images','ziti-green.png');
-var warnIcon = path.join(__dirname, 'assets','images','ziti-yellow.png');
-var disconnectedIcon = path.join(__dirname, 'assets','images','ziti-red.png');
-var trayIcon = path.join(__dirname, 'assets','images','ziti-white.png');
-var iconPath = path.join(__dirname, 'assets','images', 'ziti.png');
-var menuIcon = nativeImage.createFromPath(path.join(__dirname, 'assets','images','ziti-green.png')).resize({width:16});
-var menuWarn = nativeImage.createFromPath(path.join(__dirname, 'assets','images','ziti-yellow.png')).resize({width:16});
-var menuError = nativeImage.createFromPath(path.join(__dirname, 'assets','images','ziti-red.png')).resize({width:16});
+var connectedIcon = path.join(__dirname, 'assets','images','zt-green.png');
+var warnIcon = path.join(__dirname, 'assets','images','zt-yellow.png');
+var disconnectedIcon = path.join(__dirname, 'assets','images','zt-red.png');
+var trayIcon = path.join(__dirname, 'assets','images','zt-white.png');
+var iconPath = path.join(__dirname, 'assets','images', 'zt.png');
+var menuIcon = nativeImage.createFromPath(path.join(__dirname, 'assets','images','zt-green.png')).resize({width:16});
+var menuWarn = nativeImage.createFromPath(path.join(__dirname, 'assets','images','zt-yellow.png')).resize({width:16});
+var menuError = nativeImage.createFromPath(path.join(__dirname, 'assets','images','zt-red.png')).resize({width:16});
 var menuClose = nativeImage.createFromPath(path.join(__dirname, 'assets','images','close.svg')).resize({width:16});
 
 // var mfaConnectedIcon = path.join(__dirname, 'assets','images', 'mfa-online.ico');
@@ -134,10 +134,10 @@ var Application = {
                 Log.debug("Application.CreateWindow", "Configuring Client For: "+os.platform()+" Language: "+app.getLocale());
 
                 var ipcpaths = {
-                    events: "ziti-edge-tunnel-event.sock",
-                    tunnel: "ziti-edge-tunnel.sock",
-                    monitorEvents: ".\\Hanzo ZT\\ziti-monitor\\events",
-                    monitor: ".\\Hanzo ZT\\ziti-monitor\\ipc"
+                    events: "zt-edge-tunnel-event.sock",
+                    tunnel: "zt-edge-tunnel.sock",
+                    monitorEvents: ".\\Hanzo ZT\\zt-monitor\\events",
+                    monitor: ".\\Hanzo ZT\\zt-monitor\\ipc"
                 };
                 
                 mainWindow.webContents.send("os", os.platform());
@@ -145,26 +145,26 @@ var Application = {
                 mainWindow.webContents.send("version", app.getVersion());
 
                 if (os.platform() === "linux" || os.platform() === "darwin") {
-                    ipcpaths.events = "/tmp/.ziti/"+ipcpaths.events;
-                    ipcpaths.tunnel = "/tmp/.ziti/"+ipcpaths.tunnel;
+                    ipcpaths.events = "/tmp/.zt/"+ipcpaths.events;
+                    ipcpaths.tunnel = "/tmp/.zt/"+ipcpaths.tunnel;
                     ipcpaths.monitorEvents = null;
                     ipcpaths.monitor = null;
                 }
 
                 ipc.connectTo(
-                    'ziti',
+                    'zt',
                     ipcpaths.events,
                     function() {
-                        ipc.of.ziti.on(
+                        ipc.of.zt.on(
                             'data',
                             function(data) {
                                 mainWindow.setOverlayIcon(connectedIcon, "Connected");
                                 // tray.setImage(connectedIcon);
                                 isConnected = true;
-                                Application.onData("ziti-edge-tunnel-event", data);
+                                Application.onData("zt-edge-tunnel-event", data);
                             }
                         );
-                        ipc.of.ziti.on(
+                        ipc.of.zt.on(
                             'error',
                             function(data) {
                                 mainWindow.setOverlayIcon(disconnectedIcon, "Disconnected");
@@ -184,7 +184,7 @@ var Application = {
                         ipc.of.ZitiSend.on(
                             'data',
                             function(data) {
-                                Application.onData("ziti-edge-tunnel.sock", data);
+                                Application.onData("zt-edge-tunnel.sock", data);
                             }
                         )
                     }
@@ -198,7 +198,7 @@ var Application = {
                             ipc.of.Monitor.on(
                                 'data',
                                 function(data) {
-                                    Application.onData(".\\Hanzo ZT\\ziti-monitor\\events", data);
+                                    Application.onData(".\\Hanzo ZT\\zt-monitor\\events", data);
                                 }
                             )
                         }
@@ -213,7 +213,7 @@ var Application = {
                             ipc.of.MonitorSend.on(
                                 'data',
                                 function(data) {
-                                    Application.onData(".\\Hanzo ZT\\ziti-monitor\\ipc", data);
+                                    Application.onData(".\\Hanzo ZT\\zt-monitor\\ipc", data);
                                 }
                             )
                         }
@@ -456,7 +456,7 @@ ipcMain.handle("message", (event, data) => {
     return "";
 });
 ipcMain.handle("open-service-logs", (event, data) => {
-    var logFile = path.join(process.cwd(), "logs", "service", "ziti-tunneler.log");
+    var logFile = path.join(process.cwd(), "logs", "service", "zt-tunneler.log");
     Log.debug("Open Logs", "Opening Service Log File:"+logFile);
     shell.showItemInFolder(logFile);
 });
@@ -467,7 +467,7 @@ ipcMain.handle("open-logs", (event, data) => {
 });
 ipcMain.handle("logger-message", (event, data) => {
     if (os.platform() === "linux") {
-        var command = "journalctl -u ziti-edge-tunnel.service";
+        var command = "journalctl -u zt-edge-tunnel.service";
         var options = {
           name: 'Hanzo ZTLog'
         };
@@ -480,8 +480,8 @@ ipcMain.handle("logger-message", (event, data) => {
 });
 ipcMain.handle("monitor-message", (event, data) => {
     if (os.platform() === "linux") {
-        var command = "systemctl stop ziti-edge-tunnel";
-        if (data.Op=="Start") command = "systemctl start ziti-edge-tunnel";
+        var command = "systemctl stop zt-edge-tunnel";
+        if (data.Op=="Start") command = "systemctl start zt-edge-tunnel";
         var options = {
           name: 'Hanzo ZT'
         };
@@ -514,8 +514,8 @@ ipcMain.handle("monitor-message", (event, data) => {
 function Toggle() {
     mainWindow.webContents.send('loader', true);
     if (os.platform() === "linux") {
-        var command = "systemctl stop ziti-edge-tunnel";
-        if (!isConnected) command = "systemctl start ziti-edge-tunnel";
+        var command = "systemctl stop zt-edge-tunnel";
+        if (!isConnected) command = "systemctl start zt-edge-tunnel";
         var options = {
           name: 'Hanzo ZT'
         };
@@ -655,7 +655,7 @@ function AddIdentity() {
     var dialogData = {
         properties: ['openFile'],
         filters: [
-            { name: 'Ziti Identities', extensions: ['jwt','ziti','zed','zid','zet'] }
+            { name: 'Ziti Identities', extensions: ['jwt','zt','zed','zid','zet'] }
         ]
     }
     Log.debug("IPC Add", JSON.stringify(dialogData));

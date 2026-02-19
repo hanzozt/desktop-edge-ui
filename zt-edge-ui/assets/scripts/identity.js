@@ -34,7 +34,7 @@ var ZitiIdentity = {
                 if ((id.MfaMaxTimeoutRem-passed) <= 0) {
                     if (!ZitiIdentity.notified.includes(id.FingerPrint) && ZitiIdentity.notifiable.includes(id.FingerPrint)) {
                         var message = locale.get("MfaTimedOut").split("{{id}}").join(id.name);
-                        var notify = new Notification(locale.get("TimedOut"), { appID: locale.get("AppTitle"), body: message, tag: id.FingerPrint, icon: path.join(__dirname, '/assets/images/ziti-white.png') });
+                        var notify = new Notification(locale.get("TimedOut"), { appID: locale.get("AppTitle"), body: message, tag: id.FingerPrint, icon: path.join(__dirname, '/assets/images/zt-white.png') });
                         notify.onclick = function(e) {
                             ZitiIdentity.select(e.target.tag);
                             app.showScreen("IdentityScreen");
@@ -47,7 +47,7 @@ var ZitiIdentity = {
                         ZitiIdentity.data[i].TimingOut = true;
                         if (!ZitiIdentity.timerNotified.includes(id.FingerPrint) && ZitiIdentity.notifiable.includes(id.FingerPrint)) {
                             var message = locale.get("MfaWillTimeout").split("{{id}}").join(id.Name)+moment().add(id.MfaMinTimeoutRem-passed, 'seconds').fromNow();
-                            var notify = new Notification(locale.get("TimingOut"), { appID: locale.get("AppTitle"), body: message, tag: id.FingerPrint, icon: path.join(__dirname, '/assets/images/ziti-white.png') });
+                            var notify = new Notification(locale.get("TimingOut"), { appID: locale.get("AppTitle"), body: message, tag: id.FingerPrint, icon: path.join(__dirname, '/assets/images/zt-white.png') });
                             notify.onclick = function(e) {
                                 ZitiIdentity.select(e.target.tag);
                                 app.showScreen("IdentityScreen");

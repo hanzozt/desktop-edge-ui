@@ -95,7 +95,7 @@ var ui = {
             message = locale.getReplace("UpdateVersion", props);
         }
         $("#UpdateAvailable").show();
-        var notify = new Notification("Update", { appID: "Ziti Desktop Edge", body: message, tag: "update", icon: path.join(__dirname, '/assets/images/ziti-white.png') });
+        var notify = new Notification("Update", { appID: "Ziti Desktop Edge", body: message, tag: "update", icon: path.join(__dirname, '/assets/images/zt-white.png') });
     },
     forceUpdate: function(e) {
         var command = {
