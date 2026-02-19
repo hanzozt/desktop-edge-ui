@@ -33,7 +33,7 @@ var mfaErrorIcon = path.join(__dirname, 'assets','images', 'mfa-required.ico');
 var isConnected = false;
 
 var appPath = app.getPath('appData');
-appPath = path.join(appPath, "openziti");
+appPath = path.join(appPath, "hanzozt");
 var logDirectory = path.join(appPath, "logs");
 logDirectory = path.join(logDirectory, "ui");
 var tray;
@@ -136,8 +136,8 @@ var Application = {
                 var ipcpaths = {
                     events: "ziti-edge-tunnel-event.sock",
                     tunnel: "ziti-edge-tunnel.sock",
-                    monitorEvents: ".\\OpenZiti\\ziti-monitor\\events",
-                    monitor: ".\\OpenZiti\\ziti-monitor\\ipc"
+                    monitorEvents: ".\\Hanzo ZT\\ziti-monitor\\events",
+                    monitor: ".\\Hanzo ZT\\ziti-monitor\\ipc"
                 };
                 
                 mainWindow.webContents.send("os", os.platform());
@@ -198,7 +198,7 @@ var Application = {
                             ipc.of.Monitor.on(
                                 'data',
                                 function(data) {
-                                    Application.onData(".\\OpenZiti\\ziti-monitor\\events", data);
+                                    Application.onData(".\\Hanzo ZT\\ziti-monitor\\events", data);
                                 }
                             )
                         }
@@ -213,7 +213,7 @@ var Application = {
                             ipc.of.MonitorSend.on(
                                 'data',
                                 function(data) {
-                                    Application.onData(".\\OpenZiti\\ziti-monitor\\ipc", data);
+                                    Application.onData(".\\Hanzo ZT\\ziti-monitor\\ipc", data);
                                 }
                             )
                         }
@@ -469,7 +469,7 @@ ipcMain.handle("logger-message", (event, data) => {
     if (os.platform() === "linux") {
         var command = "journalctl -u ziti-edge-tunnel.service";
         var options = {
-          name: 'OpenZitiLog'
+          name: 'Hanzo ZTLog'
         };
         sudo.exec(command, options, function(error, stdout, stderr) {
             if (error) Log.error("Application.logger", error);
@@ -483,7 +483,7 @@ ipcMain.handle("monitor-message", (event, data) => {
         var command = "systemctl stop ziti-edge-tunnel";
         if (data.Op=="Start") command = "systemctl start ziti-edge-tunnel";
         var options = {
-          name: 'OpenZiti'
+          name: 'Hanzo ZT'
         };
         sudo.exec(command, options,
           function(error, stdout, stderr) {
@@ -517,7 +517,7 @@ function Toggle() {
         var command = "systemctl stop ziti-edge-tunnel";
         if (!isConnected) command = "systemctl start ziti-edge-tunnel";
         var options = {
-          name: 'OpenZiti'
+          name: 'Hanzo ZT'
         };
         sudo.exec(command, options,
           function(error, stdout, stderr) {

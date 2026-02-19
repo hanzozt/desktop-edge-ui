@@ -2,7 +2,7 @@
   "name": "zitidesktopedge",
   "productName": "Ziti Desktop Edge (Preview)",
   "version": "3.3.1",
-  "homepage": "openziti.io",
+  "homepage": "hanzozt.dev",
   "description": "Ziti Desktop Edge Client",
   "main": "app.js",
   "scripts": {
@@ -19,8 +19,8 @@
   ],
   "author": {
     "name": "NetFoundry",
-    "email": "ziggy@openziti.io",
-    "url": "https://openziti.io"
+    "email": "ziggy@hanzozt.dev",
+    "url": "https://hanzozt.dev"
   },
   "icon": "app.ico",
   "license": "ISC",

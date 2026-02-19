@@ -10,7 +10,7 @@ const rootPath = require('electron-root-path').rootPath;
 window.$ = window.jQuery = require("./assets/scripts/jquery.js"); 
 var Highcharts = require('highcharts');   
 require('highcharts/modules/exporting')(Highcharts);  
-const githubUrl = "https://get.openziti.io/zdew/stable.json";
+const githubUrl = "https://get.hanzozt.dev/zdew/stable.json";
 
 var app = {
     settings: {},

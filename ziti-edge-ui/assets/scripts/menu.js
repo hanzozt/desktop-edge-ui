@@ -10,7 +10,7 @@ var menu = {
         $("#ServiceLogButton").click(menu.OpenServiceLogs);
     },
     Feedback: function() {
-        shell.openExternal("mailto:support@openziti.org?subject=Desktop%20Edge%20Feedback");
+        shell.openExternal("mailto:support@hanzozt.org?subject=Desktop%20Edge%20Feedback");
     },
     GetLogPackage: function() {
         app.action = "CaptureLogs";
